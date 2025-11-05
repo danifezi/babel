@@ -1,5 +1,5 @@
-import { createRequire } from "node:module";
 import path from "node:path";
+import { requireChokidar } from "../utils.ts";
 import type { WatchOptions, FSWatcher } from "chokidar";
 
 const fileToDeps = new Map<string, Set<string>>();
@@ -145,22 +145,4 @@ function unwatchFile(filename: string) {
     removeFileDependency(filename, dep);
   }
   fileToDeps.delete(filename);
-}
-
-function requireChokidar(): any {
-  const require = createRequire(import.meta.url);
-
-  try {
-    return process.env.BABEL_8_BREAKING
-      ? require("chokidar")
-      : parseInt(process.versions.node) >= 8
-        ? require("chokidar")
-        : require("@nicolo-ribaudo/chokidar-2");
-  } catch (err) {
-    console.error(
-      "The optional dependency chokidar failed to install and is required for " +
-        "--watch. Chokidar is likely not supported on your platform.",
-    );
-    throw err;
-  }
 }
