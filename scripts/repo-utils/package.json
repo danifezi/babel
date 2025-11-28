@@ -4,5 +4,8 @@
   "exports": {
     ".": "./index.cjs",
     "./babel-top-level": "./babel.js"
+  },
+  "dependencies": {
+    "@dataconnect/generated": "file:src/dataconnect-generated"
   }
 }
